@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import './Transactions.css';
-import PropTypes from 'prop-types';
 
 
-export default class Transactions extends Component{
-    
-    render(){
-        const PLN = this.props.PLN;
-        return(
-            
+        const Transactions = (props) => {
+        return(      
                 <div className="TransactionsWrapper">
                     Add new Transaction &nbsp; 
-                    
-                    <div>{ PLN }</div>
-                    <button> <i className="fas fa-plus"/> {PLN}</button>
+                    {props.PLNdefinition}
+                    <button> <i className="fas fa-plus"/></button>
+
                 </div>
-                     
         )
+        
     }
-}
+
+
+
+export default Transactions;
