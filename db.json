@@ -1,18 +1,22 @@
 {
-    "transactions":[
-        {
-            "id":"1",
-            "pricePLN":"2.10",
-            "priceEURO":"8.40",
-            "name":"doughnut"
-            
-        },
-        {
-            "id":"2",
-            "pricePLN":"1.10",
-            "priceEURO":"4.20",
-            "name":"water"
-            
-        }
-    ]
+  "transactions": [
+    {
+      "id": "1",
+      "pricePLN": "2.10",
+      "priceEURO": "8.40",
+      "name": "doughnut"
+    },
+    {
+      "id": "2",
+      "pricePLN": "1.10",
+      "priceEURO": "4.20",
+      "name": "water"
+    },
+    {
+      "name": "Boots",
+      "pricePLN": 106,
+      "priceEURO": "20",
+      "id": "OwMZCEK"
+    }
+  ]
 }

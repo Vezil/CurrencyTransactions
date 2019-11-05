@@ -3,13 +3,19 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import Header from './components/Header';
 import axios from 'axios';
-import { Table,Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Table,Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label } from 'reactstrap';
+import { arrowFunctionExpression } from '@babel/types';
 
 class App extends Component {
 
 state = {
   PLNdefinition:'4.27',
   transactionsData: [],
+  newTransactionData: {
+      name: '',
+      pricePLN: "",
+      priceEURO: "",
+  },
   newTransactionModal: false
 }
 
@@ -24,24 +30,39 @@ componentWillMount() {
 }
 toggleNewTransactionModal() {
 
-  this.state.newTransactionModal = true;
+  this.setState({
+    newTransactionModal: !this.state.newTransactionModal
+  });
+}
+
+addTransaction(){
+  axios.post('http://localhost:3000/transactions', this.state.newTransactionData).then((response)=>{
+    let { transactionsData } = this.state;
+
+    transactionsData.push(response.data);
+
+    this.setState({ transactionsData, newTransactionModal: false, newTransactionData: {
+      name: '',
+      pricePLN: "",
+      priceEURO: ""
+  }});
+  });
 }
 
 render(){
   let transactionsData = this.state.transactionsData.map((transaction) => {
     return(
       <tr key={transaction.id}>
-      <td>{transaction.id}</td>
+      <td>{transaction.name}</td>
       <td>{transaction.pricePLN}</td>
       <td>{transaction.priceEURO}</td>
-      <td>{transaction.name}</td>
       <td><Button color="danger" size="sm">Delete</Button></td>
      </tr>
 
     )
   });
   return (
-    <div className="App">
+   <div className="App">
         <Header/>
 
 
@@ -54,14 +75,38 @@ render(){
                     </div>
         </div>
 
-        <Button color="primary" onClick={this.toggleNewTransactionModal.bind(this)}>Add New Transaction &nbsp; <i className="fas fa-plus"/></Button>
-      <Modal isOpen={this.state.NewTransactionModal} toggle={this.toggleNewTransactionModal.bind(this)}>
-        <ModalHeader toggle={this.toggleNewTransactionModal.bind(this)}>Modal title</ModalHeader>
+      <Button color="primary" onClick={this.toggleNewTransactionModal.bind(this)}>Add New Transaction &nbsp; <i className="fas fa-plus"/></Button>
+      <Modal isOpen={this.state.newTransactionModal} toggle={this.toggleNewTransactionModal.bind(this)}>
+        <ModalHeader toggle={this.toggleNewTransactionModal.bind(this)}>Add New Transaction </ModalHeader>
         <ModalBody>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <FormGroup>
+              <Label for="name">Order Title</Label>
+              <Input id="name" value={this.state.newTransactionData.name}
+              onChange={(e) =>{
+                let { newTransactionData } = this.state;
+                newTransactionData.name = e.target.value;
+
+                this.setState({ newTransactionData });
+              }}
+              />
+          </FormGroup>
+          <FormGroup>
+              <Label for="priceEURO">Price (EURO)</Label>
+              <Input id="priceEURO" value={this.state.newTransactionData.priceEURO}
+              onChange={(e) =>{
+                let { newTransactionData } = this.state;
+                let PLN = this.state.PLNdefinition;
+                
+                newTransactionData.priceEURO = e.target.value;
+                newTransactionData.pricePLN = e.target.value * PLN;
+
+                this.setState({ newTransactionData });
+              }}
+              />
+          </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={this.toggleNewTransactionModal.bind(this)}>Do Something</Button>{' '}
+          <Button color="primary" onClick={this.addTransaction.bind(this)}>Add Transaction</Button>{' '}
           <Button color="secondary" onClick={this.toggleNewTransactionModal.bind(this)}>Cancel</Button>
         </ModalFooter>
       </Modal>
@@ -70,7 +115,7 @@ render(){
                     <Table className="table">
                         <thead>
                             <tr>
-                                <th>Order Id</th>
+                                
                                 <th>Order Title</th>
                                 <th>Price (PLN)</th>
                                 <th>Price (EURO)</th>
@@ -85,7 +130,7 @@ render(){
 
 
                 </div>
-        </div>
+   </div>
   );
 }
 
