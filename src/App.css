@@ -12,3 +12,15 @@
      margin-bottom:10px;
      
  }
+ .TransactionsWrapper{
+  padding:10px;
+  text-align: center;
+  margin-top:1%;
+  background-color: cadetblue;
+}
+.table td{
+  border: 3px solid orange;
+}
+.table th{
+  border: 3px solid orange;
+}
