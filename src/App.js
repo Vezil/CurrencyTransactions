@@ -16,24 +16,37 @@ state = {
       pricePLN: "",
       priceEURO: "",
   },
-  newTransactionModal: false
+
+//   editTransactionData: {
+//     name: '',
+//     pricePLN: "",
+//     priceEURO: "",
+// },
+
+  newTransactionModal: false,
+  //editTransactionModal: false
 }
 
 componentWillMount() {
 
-  axios.get("http://localhost:3000/transactions").then((response) =>{
-      this.setState({
-        transactionsData: response.data    
-      })
-      
-  });
+ this._refreshTransactions();
+
 }
+
 toggleNewTransactionModal() {
 
   this.setState({
     newTransactionModal: !this.state.newTransactionModal
   });
 }
+
+// toggleEditTransactionModal() {
+
+//   this.setState({
+//     editTransactionModal: !this.state.editTransactionModal
+//   });
+// }
+
 
 addTransaction(){
   axios.post('http://localhost:3000/transactions', this.state.newTransactionData).then((response)=>{
@@ -49,6 +62,55 @@ addTransaction(){
   });
 }
 
+// updateTransaction() {
+
+//   let { name, pricePLN, priceEURO } = this.state.editTransactionData;
+
+//    axios.put('http://localhost:3000/transactions' + this.state.editTransactionData.id, {
+
+//     name,pricePLN,priceEURO
+
+//    }).then((response) => {
+
+//         this._refreshTransactions();
+
+//         this.setState({
+
+//           editTransactionData: {
+//             name: '',
+//             pricePLN: "",
+//             priceEURO: "",
+//         }
+//         });
+//    })
+
+// }
+
+// editTransaction(name, pricePLN, priceEURO) {
+
+//   this.setState({
+
+//     editTransactionData: { name, pricePLN, priceEURO }, editTransactionModal: !this.state.editTransactionModal
+
+//   });
+
+// }
+
+_refreshTransactions(){
+
+  axios.get("http://localhost:3000/transactions").then((response) =>{
+    this.setState({
+      transactionsData: response.data    
+    })
+});
+}
+
+deleteTransaction(id) {
+  axios.delete("http://localhost:3000/transactions/" + id).then((response) => {
+     this._refreshTransactions();
+  });
+}
+
 render(){
   let transactionsData = this.state.transactionsData.map((transaction) => {
     return(
@@ -56,7 +118,7 @@ render(){
       <td>{transaction.name}</td>
       <td>{transaction.pricePLN}</td>
       <td>{transaction.priceEURO}</td>
-      <td><Button color="danger" size="sm">Delete</Button></td>
+      <td><Button color="danger" size="sm" onClick= { this.deleteTransaction.bind(this, transaction.id) }>Delete</Button></td>
      </tr>
 
     )

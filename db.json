@@ -13,10 +13,22 @@
       "name": "water"
     },
     {
-      "name": "Boots",
-      "pricePLN": 106,
-      "priceEURO": "20",
-      "id": "OwMZCEK"
+      "name": "Bombila",
+      "pricePLN": 12.809999999999999,
+      "priceEURO": "3",
+      "id": "mA4eTrh"
+    },
+    {
+      "name": "water",
+      "pricePLN": 5,
+      "priceEURO": "1",
+      "id": "bbpfZjJ"
+    },
+    {
+      "name": "Gym",
+      "pricePLN": 93.94,
+      "priceEURO": "22",
+      "id": "1nsux05"
     }
   ]
 }
