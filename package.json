@@ -21,6 +21,7 @@
     "eject": "react-scripts eject",
     "json:server": "json-server --watch db.json"
   },
+  
   "eslintConfig": {
     "extends": "react-app"
   },

@@ -173,16 +173,24 @@ let { editTransaction } = this.state;
   });
   return (
    <div className="App">
-
+     
         <Header/>
 
         <div className="definitionchoose">
                     EURO&nbsp;<i class="fas fa-euro-sign"></i> = <b>{ this.state.PLNdefinition }</b> PLN, CHANGE:
                     <div class="inputfield">
-                        <input type="number" placeholder="4.27" onChange={(e) => {
+                        <input type="number" placeholder="4.27" min="0.01" step="0.01" onChange={(e) => {
                           let precision = parseFloat(e.target.value);
                           precision = precision.toFixed(2);
+                          if(precision<=0) {
 
+                              this.setState({
+                                PLNdefinition: precision
+      
+                                });
+                              return(alert("Currency cannot be negative"));                           
+                          }
+                          else{
                           this.setState({
                           PLNdefinition: precision
 
@@ -223,7 +231,7 @@ let { editTransaction } = this.state;
                        
                        
                        
-                     
+                     }
                     }}/>
 
                     </div>
@@ -260,7 +268,12 @@ let { editTransaction } = this.state;
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={this.addTransaction.bind(this)}>Add Transaction &nbsp; <i className="fas fa-plus"/> </Button>{' '}
+          <Button color="primary" onClick={
+            
+          
+            this.state.PLNdefinition >= 0 ? this.addTransaction.bind(this) : console.log("error")
+            
+            }>Add Transaction &nbsp; <i className="fas fa-plus"/> </Button>{' '}
           <Button color="secondary" onClick={this.toggleNewTransactionModal.bind(this)}>Cancel &nbsp; <i class="fas fa-undo"></i> </Button>
         </ModalFooter>
       </Modal>
@@ -287,7 +300,7 @@ let { editTransaction } = this.state;
 
                           <div className="sumPLN">Sum of Transaction (In PLN) : <b>{ sumInPLN }</b></div>
                           <div className="sumEuro">Sum of Transaction (In EURO) : <b>{ sumInEuro }</b></div>
-                          
+
                           <hr className="hr"></hr>
 
                           <div className="sumPLN">Max in Transactions (PLN) : <b>{ maxInPLN }</b></div>
