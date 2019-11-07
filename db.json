@@ -13,12 +13,6 @@
       "name": "water"
     },
     {
-      "name": "Bombila",
-      "pricePLN": 12.809999999999999,
-      "priceEURO": "3",
-      "id": "mA4eTrh"
-    },
-    {
       "name": "water",
       "pricePLN": 5,
       "priceEURO": "1",
@@ -35,6 +29,12 @@
       "pricePLN": 1.1,
       "priceEURO": "1.1",
       "id": "pcRQQh9"
+    },
+    {
+      "name": "Pig",
+      "pricePLN": 60.06,
+      "priceEURO": "11.55",
+      "id": "DEJTZfQ"
     }
   ]
 }

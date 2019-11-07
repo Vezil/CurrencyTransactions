@@ -124,27 +124,33 @@ render(){
   let maxInPLN = 0;
   let maxInEuro = 0;
 
+// SUM AND MAX{
   x.forEach((transaction) => {
-    sumInEuro += parseInt(transaction.priceEURO);
+    sumInEuro += parseFloat(transaction.priceEURO);
+    sumInEuro = Number(sumInEuro.toFixed(2));
   });
 
 
   x.forEach((transaction) => {
-    sumInPLN += parseInt(transaction.pricePLN);
+    sumInPLN += parseFloat(transaction.pricePLN);
+    sumInPLN = Number(sumInPLN.toFixed(2));
   });
 
   x.forEach((transaction) => {
-    if(maxInEuro <= parseInt(transaction.priceEURO)){
-      maxInEuro = parseInt(transaction.priceEURO)
+    if(maxInEuro <= parseFloat(transaction.priceEURO)){
+
+      maxInEuro = parseFloat(transaction.priceEURO);
+      maxInEuro = maxInEuro.toFixed(2);
     }
   });
 
   x.forEach((transaction) => {
     if(maxInPLN <= parseInt(transaction.pricePLN)){
-      maxInPLN = parseInt(transaction.pricePLN)
+      maxInPLN = parseInt(transaction.pricePLN);
+      maxInPLN = maxInPLN.toFixed(2);
     }
   });
-
+// }SUM AND MAX
 
   let transactionsData = this.state.transactionsData.map((transaction) => {
     return(
@@ -166,7 +172,13 @@ render(){
         <div className="definitionchoose">
                     1 EURO = <b>{ this.state.PLNdefinition }</b> PLN, CHANGE:
                     <div class="inputfield">
-                        <input type="number" placeholder="4.27" onChange={(e) => this.setState({PLNdefinition: e.target.value})}/>
+                        <input type="number" placeholder="4.27" onChange={(e) => {
+                          let precision = parseFloat(e.target.value);
+                          precision = precision.toFixed(2);
+                          this.setState({
+                          PLNdefinition: precision
+
+                          })}}/>
 
                     </div>
         </div>
