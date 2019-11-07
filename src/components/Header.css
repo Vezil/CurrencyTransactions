@@ -1,6 +1,11 @@
+
+@import url('https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap');
+
 .headertop{
-    padding:1%;
+    padding:2rem;
     text-align: center;
     background-color: rgb(15, 19, 11);
     color:gold;
+    font-family: 'Alfa Slab One', cursive;
+    margin:0;
 }

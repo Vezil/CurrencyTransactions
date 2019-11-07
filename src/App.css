@@ -1,30 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Hind+Siliguri&display=swap');
+
 :root{
   background-color: rgb(25, 31, 19);
   
 }
+.App{
+  font-family: 'Hind Siliguri', sans-serif;
+}
 .definitionchoose{
-  border: rgb(32, 2, 46) 2px solid;
+  
  text-align: center;
   font-size:2rem;
+  background-color: rgb(153, 179, 180);
+  padding:2rem;
  }
  .inputfield{
-     margin-top: 5px;
+    margin-top: 5px;
      margin-bottom:10px;
      
  }
  .TransactionsWrapper{
   padding:10px;
   text-align: center;
-  margin-top:1%;
-  background-color: cadetblue;
+
+  background-color: #5f9ea0;
+  -webkit-box-shadow: 10px 10px 38px -13px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 38px -13px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 38px -13px rgba(0,0,0,0.75);
 }
 .table td{
-  border: 3px solid orange;
+  border: 3px solid rgb(82, 56, 8);
+  
 }
 .table th{
-  border: 3px solid orange;
+  border: 3px solid rgb(82, 56, 8);
+  background-color: rgb(76, 139, 175);
+  color: rgb(204, 225, 228);
+  
 }
+.table thead{
+  border: 3px solid rgb(56, 38, 5);
+}
+.table{
+  text-transform : capitalize;
+  
+}
+
+tr:nth-child(even){background-color: #48797a}
 
 .summax{
   margin-top: 2%;
+}
+.buttonAdd{
+  padding:1rem;
+  text-align: center;
+  background-color: rgb(153, 179, 180);
+}
+.fa-trash{
+  font-size: 2.5rem;
+}
+
+.hr{
+  border: 1px solid green;
+  border-radius: 1px;
 }

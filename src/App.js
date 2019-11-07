@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import axios from 'axios';
 import { Table,Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label } from 'reactstrap';
 
@@ -17,6 +18,7 @@ state = {
   },
 
   editTransactionData: {
+    id: '',
     name: '',
     pricePLN: "",
     priceEURO: "",
@@ -54,7 +56,6 @@ addTransaction(){
     transactionsData.push(response.data);
 
     this.setState({ transactionsData, newTransactionModal: false, newTransactionData: {
-      id : '',
       name: '',
       pricePLN: "",
       priceEURO: ""
@@ -88,12 +89,12 @@ updateTransaction() {
 
 }
 
-editTransaction(id, name, pricePLN, priceEURO) {
+editTransaction(name, pricePLN, priceEURO, id) {
 
   console.log(name);
   this.setState({
 
-    editTransactionData: {id, name, pricePLN, priceEURO }
+    editTransactionData: { name, pricePLN, priceEURO, id }
     
   });
 
@@ -172,12 +173,11 @@ let { editTransaction } = this.state;
   });
   return (
    <div className="App">
+
         <Header/>
 
-
-
         <div className="definitionchoose">
-                    1 EURO = <b>{ this.state.PLNdefinition }</b> PLN, CHANGE:
+                    EURO&nbsp;<i class="fas fa-euro-sign"></i> = <b>{ this.state.PLNdefinition }</b> PLN, CHANGE:
                     <div class="inputfield">
                         <input type="number" placeholder="4.27" onChange={(e) => {
                           let precision = parseFloat(e.target.value);
@@ -214,7 +214,7 @@ let { editTransaction } = this.state;
                         this.state.editTransactionData.pricePLN = pln;
                         this.state.editTransactionData.priceEURO = euro;
 
-                        this.editTransaction.bind(this, transaction.id,transaction.name,pln,euro);
+                        this.editTransaction.bind(this,transaction.name,pln,euro,transaction.id);
                         this.setState({ editTransaction });
                         this.updateTransaction.bind(this);
                     
@@ -229,7 +229,7 @@ let { editTransaction } = this.state;
                     </div>
         </div>
 
-      <Button color="primary" onClick={this.toggleNewTransactionModal.bind(this)}>Add New Transaction &nbsp; <i className="fas fa-plus"/></Button>
+      <div className="buttonAdd"><Button color="primary" onClick={this.toggleNewTransactionModal.bind(this)}>Add New Transaction &nbsp; <i className="fas fa-plus"/></Button></div>
       <Modal isOpen={this.state.newTransactionModal} toggle={this.toggleNewTransactionModal.bind(this)}>
         <ModalHeader toggle={this.toggleNewTransactionModal.bind(this)}>Add New Transaction </ModalHeader>
         <ModalBody>
@@ -260,8 +260,8 @@ let { editTransaction } = this.state;
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={this.addTransaction.bind(this)}>Add Transaction</Button>{' '}
-          <Button color="secondary" onClick={this.toggleNewTransactionModal.bind(this)}>Cancel</Button>
+          <Button color="primary" onClick={this.addTransaction.bind(this)}>Add Transaction &nbsp; <i className="fas fa-plus"/> </Button>{' '}
+          <Button color="secondary" onClick={this.toggleNewTransactionModal.bind(this)}>Cancel &nbsp; <i class="fas fa-undo"></i> </Button>
         </ModalFooter>
       </Modal>
 
@@ -272,7 +272,7 @@ let { editTransaction } = this.state;
                                 
                                 <th>Order Title</th>
                                 <th>Price (PLN)</th>
-                                <th>Price (EURO)</th>
+                                <th>Price (EURO) </th>
                                 
                                 <th><i class="fa fa-trash" aria-hidden="true"></i></th>
                             </tr>
@@ -283,14 +283,22 @@ let { editTransaction } = this.state;
                     </Table>
 
                     <div className="summax">
+                          <hr className="hr"></hr>
+
                           <div className="sumPLN">Sum of Transaction (In PLN) : <b>{ sumInPLN }</b></div>
                           <div className="sumEuro">Sum of Transaction (In EURO) : <b>{ sumInEuro }</b></div>
+                          
+                          <hr className="hr"></hr>
 
                           <div className="sumPLN">Max in Transactions (PLN) : <b>{ maxInPLN }</b></div>
                           <div className="sumEuro">Max in Transactions (EURO) : <b>{ maxInEuro }</b></div>
+                        
+                          <hr className="hr"></hr>
                     </div>
 
                 </div>
+
+                <Footer/>
    </div>
   );
 }

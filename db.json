@@ -1,16 +1,16 @@
 {
   "transactions": [
     {
-      "id": "1",
       "pricePLN": "2.10",
       "priceEURO": "8.40",
-      "name": "doughnut"
+      "name": "doughnut",
+      "id": "1"
     },
     {
-      "id": "2",
       "pricePLN": "1.10",
       "priceEURO": "4.20",
-      "name": "water"
+      "name": "water",
+      "id": "2"
     },
     {
       "name": "Gym",
@@ -29,6 +29,18 @@
       "pricePLN": 60.06,
       "priceEURO": "11.55",
       "id": "DEJTZfQ"
+    },
+    {
+      "name": "ball",
+      "pricePLN": 44,
+      "priceEURO": "22",
+      "id": "rcVpjgR"
+    },
+    {
+      "name": "PS5",
+      "pricePLN": 3998,
+      "priceEURO": "1999",
+      "id": "GOOlKwR"
     }
   ]
 }
