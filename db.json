@@ -1,28 +1,10 @@
 {
   "transactions": [
     {
-      "pricePLN": "2.10",
-      "priceEURO": "8.40",
-      "name": "doughnut",
-      "id": "1"
-    },
-    {
-      "pricePLN": "1.10",
-      "priceEURO": "4.20",
-      "name": "water",
-      "id": "2"
-    },
-    {
       "name": "Gym",
       "pricePLN": 93.94,
       "priceEURO": "22",
       "id": "1nsux05"
-    },
-    {
-      "name": "s",
-      "pricePLN": 1.1,
-      "priceEURO": "1.1",
-      "id": "pcRQQh9"
     },
     {
       "name": "Pig",
@@ -41,6 +23,18 @@
       "pricePLN": 3998,
       "priceEURO": "1999",
       "id": "GOOlKwR"
+    },
+    {
+      "name": "matero",
+      "pricePLN": 13.8,
+      "priceEURO": "4",
+      "id": "oY8PYr7"
+    },
+    {
+      "id": "Wj1eIe1",
+      "pricePLN": "2",
+      "priceEURO": "8.42",
+      "name": "doughnut"
     }
   ]
 }

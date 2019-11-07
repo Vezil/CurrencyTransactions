@@ -8,7 +8,7 @@ export default class Header extends Component{
         
             
                 <h3 className="headertop">
-                    Currency Transactions <i class="fas fa-coins"></i>
+                    Currency Transactions <i className="fas fa-coins"></i>
                 </h3>
             
            

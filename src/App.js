@@ -25,7 +25,7 @@ state = {
 },
 
   newTransactionModal: false,
-  //editTransactionModal: false
+  
 }
 
 componentWillMount() {
@@ -41,16 +41,9 @@ toggleNewTransactionModal() {
   });
 }
 
-// toggleEditTransactionModal() {
-
-//   this.setState({
-//     editTransactionModal: !this.state.editTransactionModal
-//   });
-// }
-
 
 addTransaction(){
-  axios.post('http://localhost:3000/transactions', this.state.newTransactionData).then((response)=>{
+  axios.put('http://localhost:3000/transactions', this.state.newTransactionData).then((response)=>{
     let { transactionsData } = this.state;
 
     transactionsData.push(response.data);
@@ -66,32 +59,32 @@ addTransaction(){
 updateTransaction() {
 
   let { name, pricePLN, priceEURO } = this.state.editTransactionData;
-  console.log(name);
-   axios.put('http://localhost:3000/transactions/' + this.state.editTransactionData.id, {
+
+   axios.post('http://localhost:3000/transactions/' + this.state.editTransactionData.id, {
 
     name,pricePLN,priceEURO
 
    }).then((response) => {
 
-        // this._refreshTransactions();
-
-        // this.setState({
-
-        //   editTransactionData: {
-        //     id : '',
-        //     name: '',
-        //     pricePLN: "",
-        //     priceEURO: "",
-        // }
-        // });
+        this._refreshTransactions();
         console.log(response.data);
+        this.setState({
+
+          editTransactionData: {
+            id : '',
+            name: '',
+            pricePLN: "",
+            priceEURO: "",
+        }
+        });
+        
    });
 
 }
 
 editTransaction(name, pricePLN, priceEURO, id) {
 
-  console.log(name);
+  
   this.setState({
 
     editTransactionData: { name, pricePLN, priceEURO, id }
@@ -157,8 +150,8 @@ render(){
   });
 // }SUM AND MAX
 
-let { editTransaction } = this.state;
 
+let { editTransaction } = this.state;
 
   let transactionsData = this.state.transactionsData.map((transaction) => {
     return(
@@ -177,7 +170,7 @@ let { editTransaction } = this.state;
         <Header/>
 
         <div className="definitionchoose">
-                    EURO&nbsp;<i class="fas fa-euro-sign"></i> = <b>{ this.state.PLNdefinition }</b> PLN, CHANGE:
+                    EURO&nbsp;<i className="fas fa-euro-sign"></i> = <b>{ this.state.PLNdefinition }</b> PLN, CHANGE:
                     <div class="inputfield">
                         <input type="number" placeholder="4.27" min="0.01" step="0.01" onChange={(e) => {
                           let precision = parseFloat(e.target.value);
@@ -197,41 +190,46 @@ let { editTransaction } = this.state;
                           });
 
                        let eurobefore = 0;
-                       let plnbefore = 0;
 
                        let pln = 0;
                        let euro = 0;
 
                        let count = 0;
                       
+                       
 
                        this.state.transactionsData.map((transaction) => {
 
-                        eurobefore = (transaction.pricePLN/transaction.priceEURO);
-                        plnbefore = (transaction.priceEURO/transaction.pricePLN);
+                        let { editTransactionData } = this.state;
 
-                        count = transaction.priceEURO - eurobefore;
+                        eurobefore = (transaction.pricePLN/transaction.priceEURO);
+                        
+                        count = (transaction.priceEURO/eurobefore);
                         pln = parseFloat(count*precision);
                         pln = pln.toFixed(2);                      
                         euro = parseFloat(transaction.priceEURO);
                         euro = euro.toFixed(2);
                         //console.log(eurocount);
 
-                        this.state.editTransactionData.id = transaction.id;
-                        this.state.editTransactionData.name = transaction.name;
-                        this.state.editTransactionData.pricePLN = pln;
-                        this.state.editTransactionData.priceEURO = euro;
+                        editTransactionData.id = transaction.id;
+                        editTransactionData.name = transaction.name;
+                        editTransactionData.pricePLN = pln;
+                        editTransactionData.priceEURO = euro;
+                        this.setState({ editTransactionData });
 
                         this.editTransaction.bind(this,transaction.name,pln,euro,transaction.id);
-                        this.setState({ editTransaction });
                         this.updateTransaction.bind(this);
+                        console.log(this.updateTransaction.bind(this));
+                        console.log(editTransactionData);
+                        
+                                               
                     
                        });
-
-                       
-                       
-                       
+                                   
+                                      
                      }
+                     
+                       
                     }}/>
 
                     </div>
@@ -262,6 +260,14 @@ let { editTransaction } = this.state;
                 newTransactionData.priceEURO = e.target.value;
                 newTransactionData.pricePLN = e.target.value * PLN;
 
+                newTransactionData.priceEURO = parseFloat(newTransactionData.priceEURO);
+                newTransactionData.pricePLN = parseFloat(newTransactionData.pricePLN);
+
+                newTransactionData.priceEURO = Number((newTransactionData.priceEURO).toFixed(2));
+                newTransactionData.pricePLN = Number((newTransactionData.pricePLN).toFixed(2));
+
+
+                sumInEuro = Number(sumInEuro.toFixed(2));
                 this.setState({ newTransactionData });
               }}
               />
@@ -274,7 +280,7 @@ let { editTransaction } = this.state;
             this.state.PLNdefinition >= 0 ? this.addTransaction.bind(this) : console.log("error")
             
             }>Add Transaction &nbsp; <i className="fas fa-plus"/> </Button>{' '}
-          <Button color="secondary" onClick={this.toggleNewTransactionModal.bind(this)}>Cancel &nbsp; <i class="fas fa-undo"></i> </Button>
+          <Button color="secondary" onClick={this.toggleNewTransactionModal.bind(this)}>Cancel &nbsp; <i className="fas fa-undo"></i> </Button>
         </ModalFooter>
       </Modal>
 
