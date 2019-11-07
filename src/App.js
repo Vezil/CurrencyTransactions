@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Header from './components/Header';
 import axios from 'axios';
 import { Table,Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label } from 'reactstrap';
-import { arrowFunctionExpression } from '@babel/types';
 
 class App extends Component {
 
@@ -102,7 +101,8 @@ _refreshTransactions(){
     this.setState({
       transactionsData: response.data    
     })
-});
+    });
+
 }
 
 deleteTransaction(id) {
@@ -111,7 +111,30 @@ deleteTransaction(id) {
   });
 }
 
+
+
+
 render(){
+
+  let x = this.state.transactionsData;
+  let y = this.state.transactionsData;
+  
+  
+
+  let sumInPLN = 0;
+  let sumInEuro = 0;
+
+  x.forEach((transaction) => {
+    sumInEuro += parseInt(transaction.priceEURO);
+  })
+
+
+ y.forEach((transaction) => {
+    sumInPLN += parseInt(transaction.pricePLN);
+  })
+
+
+
   let transactionsData = this.state.transactionsData.map((transaction) => {
     return(
       <tr key={transaction.id}>
@@ -190,6 +213,10 @@ render(){
                         </tbody>
                     </Table>
 
+                    <div className="sum">
+                          <div className="sumPLN">Sum of Transaction (In PLN) : <b>{ sumInPLN }</b></div>
+                          <div className="sumEuro">Sum of Transaction (In EURO) : <b>{ sumInEuro }</b></div>
+                    </div>
 
                 </div>
    </div>
