@@ -16,11 +16,11 @@ state = {
       priceEURO: "",
   },
 
-//   editTransactionData: {
-//     name: '',
-//     pricePLN: "",
-//     priceEURO: "",
-// },
+  editTransactionData: {
+    name: '',
+    pricePLN: "",
+    priceEURO: "",
+},
 
   newTransactionModal: false,
   //editTransactionModal: false
@@ -54,6 +54,7 @@ addTransaction(){
     transactionsData.push(response.data);
 
     this.setState({ transactionsData, newTransactionModal: false, newTransactionData: {
+      id : '',
       name: '',
       pricePLN: "",
       priceEURO: ""
@@ -61,39 +62,42 @@ addTransaction(){
   });
 }
 
-// updateTransaction() {
+updateTransaction() {
 
-//   let { name, pricePLN, priceEURO } = this.state.editTransactionData;
+  let { name, pricePLN, priceEURO } = this.state.editTransactionData;
+  console.log(name);
+   axios.put('http://localhost:3000/transactions/' + this.state.editTransactionData.id, {
 
-//    axios.put('http://localhost:3000/transactions' + this.state.editTransactionData.id, {
+    name,pricePLN,priceEURO
 
-//     name,pricePLN,priceEURO
+   }).then((response) => {
 
-//    }).then((response) => {
+        // this._refreshTransactions();
 
-//         this._refreshTransactions();
+        // this.setState({
 
-//         this.setState({
+        //   editTransactionData: {
+        //     id : '',
+        //     name: '',
+        //     pricePLN: "",
+        //     priceEURO: "",
+        // }
+        // });
+        console.log(response.data);
+   });
 
-//           editTransactionData: {
-//             name: '',
-//             pricePLN: "",
-//             priceEURO: "",
-//         }
-//         });
-//    })
+}
 
-// }
+editTransaction(id, name, pricePLN, priceEURO) {
 
-// editTransaction(name, pricePLN, priceEURO) {
+  console.log(name);
+  this.setState({
 
-//   this.setState({
+    editTransactionData: {id, name, pricePLN, priceEURO }
+    
+  });
 
-//     editTransactionData: { name, pricePLN, priceEURO }, editTransactionModal: !this.state.editTransactionModal
-
-//   });
-
-// }
+}
 
 _refreshTransactions(){
 
@@ -152,6 +156,9 @@ render(){
   });
 // }SUM AND MAX
 
+let { editTransaction } = this.state;
+
+
   let transactionsData = this.state.transactionsData.map((transaction) => {
     return(
       <tr key={transaction.id}>
@@ -175,10 +182,49 @@ render(){
                         <input type="number" placeholder="4.27" onChange={(e) => {
                           let precision = parseFloat(e.target.value);
                           precision = precision.toFixed(2);
+
                           this.setState({
                           PLNdefinition: precision
 
-                          })}}/>
+                          });
+
+                       let eurobefore = 0;
+                       let plnbefore = 0;
+
+                       let pln = 0;
+                       let euro = 0;
+
+                       let count = 0;
+                      
+
+                       this.state.transactionsData.map((transaction) => {
+
+                        eurobefore = (transaction.pricePLN/transaction.priceEURO);
+                        plnbefore = (transaction.priceEURO/transaction.pricePLN);
+
+                        count = transaction.priceEURO - eurobefore;
+                        pln = parseFloat(count*precision);
+                        pln = pln.toFixed(2);                      
+                        euro = parseFloat(transaction.priceEURO);
+                        euro = euro.toFixed(2);
+                        //console.log(eurocount);
+
+                        this.state.editTransactionData.id = transaction.id;
+                        this.state.editTransactionData.name = transaction.name;
+                        this.state.editTransactionData.pricePLN = pln;
+                        this.state.editTransactionData.priceEURO = euro;
+
+                        this.editTransaction.bind(this, transaction.id,transaction.name,pln,euro);
+                        this.setState({ editTransaction });
+                        this.updateTransaction.bind(this);
+                    
+                       });
+
+                       
+                       
+                       
+                     
+                    }}/>
 
                     </div>
         </div>
@@ -232,7 +278,7 @@ render(){
                             </tr>
                         </thead>
                         <tbody>
-                          {transactionsData}   
+                          {transactionsData}
                         </tbody>
                     </Table>
 
