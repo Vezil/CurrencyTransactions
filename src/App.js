@@ -43,7 +43,7 @@ toggleNewTransactionModal() {
 
 
 addTransaction(){
-  axios.put('http://localhost:3000/transactions', this.state.newTransactionData).then((response)=>{
+  axios.post('http://localhost:3000/transactions', this.state.newTransactionData).then((response)=>{
     let { transactionsData } = this.state;
 
     transactionsData.push(response.data);
@@ -54,32 +54,6 @@ addTransaction(){
       priceEURO: ""
   }});
   });
-}
-
-updateTransaction() {
-
-  let { name, pricePLN, priceEURO } = this.state.editTransactionData;
-
-   axios.post('http://localhost:3000/transactions/' + this.state.editTransactionData.id, {
-
-    name,pricePLN,priceEURO
-
-   }).then((response) => {
-
-        this._refreshTransactions();
-        console.log(response.data);
-        this.setState({
-
-          editTransactionData: {
-            id : '',
-            name: '',
-            pricePLN: "",
-            priceEURO: "",
-        }
-        });
-        
-   });
-
 }
 
 editTransaction(name, pricePLN, priceEURO, id) {
@@ -151,7 +125,7 @@ render(){
 // }SUM AND MAX
 
 
-let { editTransaction } = this.state;
+
 
   let transactionsData = this.state.transactionsData.map((transaction) => {
     return(
@@ -173,6 +147,7 @@ let { editTransaction } = this.state;
                     EURO&nbsp;<i className="fas fa-euro-sign"></i> = <b>{ this.state.PLNdefinition }</b> PLN, CHANGE:
                     <div class="inputfield">
                         <input type="number" placeholder="4.27" min="0.01" step="0.01" onChange={(e) => {
+                                         
                           let precision = parseFloat(e.target.value);
                           precision = precision.toFixed(2);
                           if(precision<=0) {
@@ -183,7 +158,7 @@ let { editTransaction } = this.state;
                                 });
                               return(alert("Currency cannot be negative"));                           
                           }
-                          else{
+                          else if(precision>0){
                           this.setState({
                           PLNdefinition: precision
 
@@ -191,36 +166,50 @@ let { editTransaction } = this.state;
 
                        let eurobefore = 0;
 
-                       let pln = 0;
-                       let euro = 0;
+                       let pricePLN = 0;
+                       let priceEURO = 0;
+                       let name;
 
                        let count = 0;
                       
                        
 
                        this.state.transactionsData.map((transaction) => {
+                        eurobefore=0;
+                        pricePLN=0;
+                        priceEURO=0;
+                        count = 0;               
 
                         let { editTransactionData } = this.state;
 
                         eurobefore = (transaction.pricePLN/transaction.priceEURO);
                         
-                        count = (transaction.priceEURO/eurobefore);
-                        pln = parseFloat(count*precision);
-                        pln = pln.toFixed(2);                      
-                        euro = parseFloat(transaction.priceEURO);
-                        euro = euro.toFixed(2);
+                        count = (transaction.pricePLN/eurobefore);
+                        pricePLN = parseFloat(count*precision);
+                        pricePLN = Number(pricePLN.toFixed(2));                      
+                        priceEURO = parseFloat(transaction.priceEURO);
+                        priceEURO = priceEURO.toFixed(2);
                         //console.log(eurocount);
 
                         editTransactionData.id = transaction.id;
                         editTransactionData.name = transaction.name;
-                        editTransactionData.pricePLN = pln;
-                        editTransactionData.priceEURO = euro;
+                        editTransactionData.pricePLN = pricePLN;
+                        editTransactionData.priceEURO = priceEURO;
+
+                        name = editTransactionData.name 
                         this.setState({ editTransactionData });
 
-                        this.editTransaction.bind(this,transaction.name,pln,euro,transaction.id);
-                        this.updateTransaction.bind(this);
-                        console.log(this.updateTransaction.bind(this));
-                        console.log(editTransactionData);
+
+                        axios.put('http://localhost:3000/transactions/' + this.state.editTransactionData.id, {
+
+                         name,pricePLN,priceEURO
+                      
+                         }).then((response) => {
+                      
+                              this._refreshTransactions();
+                             // console.log(response.data);
+                              
+                         });
                         
                                                
                     
@@ -228,7 +217,9 @@ let { editTransaction } = this.state;
                                    
                                       
                      }
-                     
+                     else{
+                       alert("Error. Enter the correct number");
+                     }
                        
                     }}/>
 

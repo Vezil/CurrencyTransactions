@@ -1,40 +1,52 @@
 {
   "transactions": [
     {
-      "name": "Gym",
-      "pricePLN": 93.94,
-      "priceEURO": "22",
-      "id": "1nsux05"
-    },
-    {
-      "name": "Pig",
-      "pricePLN": 60.06,
-      "priceEURO": "11.55",
-      "id": "DEJTZfQ"
-    },
-    {
       "name": "ball",
-      "pricePLN": 44,
-      "priceEURO": "22",
+      "pricePLN": 93.94,
+      "priceEURO": "22.00",
       "id": "rcVpjgR"
     },
     {
       "name": "PS5",
-      "pricePLN": 3998,
-      "priceEURO": "1999",
+      "pricePLN": 8535.73,
+      "priceEURO": "1999.00",
       "id": "GOOlKwR"
     },
     {
       "name": "matero",
-      "pricePLN": 13.8,
-      "priceEURO": "4",
+      "pricePLN": 17.08,
+      "priceEURO": "4.00",
       "id": "oY8PYr7"
     },
     {
-      "id": "Wj1eIe1",
-      "pricePLN": "2",
-      "priceEURO": "8.42",
-      "name": "doughnut"
+      "name": "Doughnut",
+      "pricePLN": 8.54,
+      "priceEURO": "2.00",
+      "id": "G4x5Iu1"
+    },
+    {
+      "name": "Gym Carnet",
+      "pricePLN": 46.97,
+      "priceEURO": "11.00",
+      "id": "ymR1ATG"
+    },
+    {
+      "name": "Notebook",
+      "pricePLN": 8.54,
+      "priceEURO": "2.00",
+      "id": "UVF0-vi"
+    },
+    {
+      "name": "Camera",
+      "pricePLN": 4223.03,
+      "priceEURO": "989.00",
+      "id": "TL7q07l"
+    },
+    {
+      "name": "The Witcher 3",
+      "pricePLN": 115.29,
+      "priceEURO": "27.00",
+      "id": "0iwZhTM"
     }
   ]
 }
